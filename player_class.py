@@ -3,4 +3,3 @@ class Player:
         self.name = name
         self.wins = wins
         
-        
