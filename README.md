@@ -1,4 +1,4 @@
 # terminal_game
-##stone_paper_scissors terminal game
-####lenguage: spanish
+## stone_paper_scissors terminal game
+#### lenguage: spanish
 
