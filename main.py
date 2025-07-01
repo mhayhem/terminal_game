@@ -36,7 +36,11 @@ def create_player(choice):
     if choice == "1":
         print("Introduzca su nombre:")
         player = input()
+<<<<<<< HEAD
         sleep(0.5)
+=======
+        sleep(1)
+>>>>>>> 78ac13d (refactorized gsme logic)
         player_1= P(player, 0)
         player_2 = None
         print(f"Jugador creado: {player_1.name}")
@@ -62,6 +66,36 @@ def checking_is_multiplayer(player_1, player_2):
         single_mode = False
     return single_mode, player_1, player_2
 
+def movents(player_1_move, player_2_move):
+    winner = None
+    choices = ["piedra", "papel", "tijeras"]
+    print(f"{player_1_move} - {player_2_move}")
+    if player_1_move == player_2_move:
+        print("Empate, no hay ganador en esta ronda")
+        return winner
+    if player_1_move not in choices or player_2_move not in choices:
+        print("Movimiento no válido, por favor elige entre piedra, papel o tijeras")
+        return None
+    if player_1_move == choices[0] and player_2_move == choices[2] or \
+        player_1_move == choices[1] and player_2_move == choices[0] or \
+            player_1_move == choices[2] and  player_2_move == choices[1]:
+        winner = "player_1"
+    else:
+        winner = "player_2"
+    return winner
+
+def update_winner(player_1, player_2, winner):
+    if winner == None:
+        return None
+    elif winner == "player_1":
+        print(f"{player_1.name} gana esta ronda")
+        player_1.wins += 1
+    else:
+        print(f"{player_2.name} gana esta ronda")
+        player_2.wins += 1
+    
+                
+
 def play_round(player_1, player_2, single_mode, game):
     print("Juguemos a piedra, papel o tijeras")
     print(f"{player_1.name} vs {player_2.name}")
@@ -74,33 +108,19 @@ def play_round(player_1, player_2, single_mode, game):
             
             print(f"Ronda {rounds}")
             print(f"{player_1.name} elige movimiento:")
-            orion_move = random.choice(choices)
-            player_move = input().lower()
-            if player_move not in choices:
-                continue
-            if player_move == orion_move:
-                print(f"Ambos sacaron {player_move}, repetimos ronda")
-            if player_move == choices[0] and orion_move == choices[2] or \
-                player_move == choices[1] and orion_move == choices[0] or \
-                player_move == choices[2] and orion_move == choices[1]:
-                    print(f"{player_1.name} gana esta ronda")
-                    player_1.wins += 1
-                    rounds += 1
-                    sleep(1)
-            else:
-                print(f"{player_2.name} gana esta ronda")
-                player_2.wins += 1
-                rounds += 1
-                sleep(1)
+            player_2_move = random.choice(choices)
+            player_1_move = input().lower()
+            winner = movents(player_1_move, player_2_move)
+            update_winner(player_1, player_2, winner)
+            rounds += 1
+            
         else:
             print(f"Ronda {rounds}")
-            print(f"Turno de {player_1.name} elige movimiento:")
+            print(f"{player_1.name} elige movimiento:")
             player_1_move = input().lower()
-            if player_1_move not in choices:
-                continue
-            sleep(1)
-            print(f"Turno de {player_2.name} elige movimiento:")
+            print(f"{player_2.name} elige movimiento:")
             player_2_move = input().lower()
+<<<<<<< HEAD
             if player_2_move not in choices:
                 continue
             if player_1_move == player_2_move:
@@ -118,6 +138,12 @@ def play_round(player_1, player_2, single_mode, game):
                 player_2.wins += 1
                 rounds += 1
                 sleep(1)
+=======
+            winner = movents(player_1_move, player_2_move)
+            update_winner(player_1, player_2, winner)
+            rounds += 1
+        
+>>>>>>> 78ac13d (refactorized gsme logic)
         result = f"{player_1.wins} - {player_2.wins}"
         if player_1.wins > player_2.wins:
             winner = player_1.name
