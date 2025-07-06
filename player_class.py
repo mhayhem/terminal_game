@@ -1,3 +1,5 @@
+# @author: Mhayhem
+# date: 2025-05-15
 class Player:
     """player class to create player objects with name and wins attributes
     

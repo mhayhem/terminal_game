@@ -1,3 +1,6 @@
+# @author: Mhayhem
+# date: 2025-05-10
+
 from player_class import Player as P
 import random
 import getpass 
