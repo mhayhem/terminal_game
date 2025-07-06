@@ -1,5 +1,6 @@
 from player_class import Player as P
 import random
+import getpass # hidden inputs in muliplayer mode
 from time import sleep
 
 def number_of_players():
@@ -36,11 +37,7 @@ def create_player(choice):
     if choice == "1":
         print("Introduzca su nombre:")
         player = input()
-<<<<<<< HEAD
         sleep(0.5)
-=======
-        sleep(1)
->>>>>>> 78ac13d (refactorized gsme logic)
         player_1= P(player, 0)
         player_2 = None
         print(f"Jugador creado: {player_1.name}")
@@ -116,34 +113,13 @@ def play_round(player_1, player_2, single_mode, game):
             
         else:
             print(f"Ronda {rounds}")
-            print(f"{player_1.name} elige movimiento:")
-            player_1_move = input().lower()
-            print(f"{player_2.name} elige movimiento:")
-            player_2_move = input().lower()
-<<<<<<< HEAD
-            if player_2_move not in choices:
-                continue
-            if player_1_move == player_2_move:
-                print(f"Ambos sacaron {player_1_move}, repetimos ronda")
-                continue
-            if player_1_move == choices[0] and player_2_move == choices[2] or \
-                player_1_move == choices[1] and player_2_move == choices[0] or \
-                player_1_move == choices[2] and player_2_move == choices[1]:
-                    print(f"{player_1.name} gana esta ronda")
-                    player_1.wins += 1
-                    rounds += 1
-                    sleep(1)
-            else:
-                print(f"{player_2.name} gana esta ronda")
-                player_2.wins += 1
-                rounds += 1
-                sleep(1)
-=======
+            player_1_move = getpass.getpass(f"{player_1.name} elige movimiento: ").lower()
+            sleep(0.2)
+            player_2_move = getpass.getpass(f"{player_2.name} elige movimiento: ").lower()
+            sleep(0.2)
             winner = movents(player_1_move, player_2_move)
             update_winner(player_1, player_2, winner)
             rounds += 1
-        
->>>>>>> 78ac13d (refactorized gsme logic)
         result = f"{player_1.wins} - {player_2.wins}"
         if player_1.wins > player_2.wins:
             winner = player_1.name
