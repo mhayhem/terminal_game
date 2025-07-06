@@ -1,9 +1,15 @@
 from player_class import Player as P
 import random
-import getpass # hidden inputs in muliplayer mode
+import getpass 
 from time import sleep
 
 def number_of_players():
+    """selecting the mode of the game, single player or multiplayer
+
+    Returns:
+        str: number of players
+        1 for single player, 2 for multiplayer
+    """
     print("Elige jugar solo o contra alguien:")
     print("1. Singleplayer")
     print("2. Multiplayer")
@@ -16,9 +22,15 @@ def number_of_players():
             continue
 
 def number_of_rounds():
+    """selecting the number of rounds to win the game
+
+    Returns:
+        str: number of rounds to win the game
+        3 for best of 3, 5 for best of 5
+    """
     print("Elige número de rondas")
-    print("1. al mejor de 3 ")
-    print("2. al mejor de 5")
+    print("1. al mejor de 3 ") # for winning need 3 wins
+    print("2. al mejor de 5") # for winning need 5 wins
     game = 0
     sleep(1)
     while True:
@@ -33,13 +45,23 @@ def number_of_rounds():
             continue
 
 def create_player(choice):
+    """catching the name of players and creating teh players objects
+
+    Args:
+        choice (str): mode of the game
+
+    Returns:
+        objects: player_1 and player_2 objects
+        player_2 is None in single player mode
+    """
     print("Creando jugador(s)")
     if choice == "1":
         print("Introduzca su nombre:")
         player = input()
         sleep(0.5)
         player_1= P(player, 0)
-        player_2 = None
+        # single player mode, second player is AI
+        player_2 = None 
         print(f"Jugador creado: {player_1.name}")
         return player_1, player_2
     elif choice == "2":
@@ -54,8 +76,18 @@ def create_player(choice):
         sleep(1)
         print(f"Jugadorescreados: {player_1.name} vs {player_2.name}")
         return player_1, player_2
-    
+
 def checking_is_multiplayer(player_1, player_2):
+    """checking if the game is single player or multiplayer
+
+    Args:
+        player_1 (object): players object
+        player_2 (object): players object
+
+    Returns:
+        bool: game mode
+        object: players objects
+    """
     if player_2 is None:
         player_2 = P("Orión", 0)
         single_mode = True
@@ -64,6 +96,16 @@ def checking_is_multiplayer(player_1, player_2):
     return single_mode, player_1, player_2
 
 def movents(player_1_move, player_2_move):
+    """checking the moves of the players and determining the winner
+
+    Args:
+        player_1_move (str): choice of player 1
+        player_2_move (str): choice of player 2
+        
+        Returns:
+        str: winner of the round
+        None if there is no winner or the moves are invalid or a tie
+    """
     winner = None
     choices = ["piedra", "papel", "tijeras"]
     print(f"{player_1_move} - {player_2_move}")
@@ -82,6 +124,16 @@ def movents(player_1_move, player_2_move):
     return winner
 
 def update_winner(player_1, player_2, winner):
+    """checking the winner of the round and updating the player´s wins
+
+    Args:
+        player_1 (object): players object
+        player_2 (object): players object
+        winner (str): player that won the round
+
+    Returns:
+        None: if there is no winner or the moves are invalid or a tie
+    """
     if winner == None:
         return None
     elif winner == "player_1":
@@ -94,6 +146,14 @@ def update_winner(player_1, player_2, winner):
                 
 
 def play_round(player_1, player_2, single_mode, game):
+    """game loop, playing rounds until one player wins the game
+
+    Args:
+        player_1 (object): players
+        player_2 (object): players
+        single_mode (str): game mode
+        game (int): _description_number of rounds to win the game
+    """
     print("Juguemos a piedra, papel o tijeras")
     print(f"{player_1.name} vs {player_2.name}")
     choices = ["piedra", "papel", "tijeras"]
@@ -110,7 +170,7 @@ def play_round(player_1, player_2, single_mode, game):
             winner = movents(player_1_move, player_2_move)
             update_winner(player_1, player_2, winner)
             rounds += 1
-            
+        # in multiplayer mode, the players choose are hidden    
         else:
             print(f"Ronda {rounds}")
             player_1_move = getpass.getpass(f"{player_1.name} elige movimiento: ").lower()
@@ -127,8 +187,11 @@ def play_round(player_1, player_2, single_mode, game):
             winner = player_2.name
     print(f"Partida terminada, {winner} ha ganado, el resultado final es: {result}")
     print("¡Gracias por jugar, hasta la proxima!")
-    
+
 def main():
+    """main function to run th¡e game
+    This function will call all the other functions to run the game
+    """
     choice = number_of_players()
     game = number_of_rounds()
     player_1, player_2 = create_player(choice)
